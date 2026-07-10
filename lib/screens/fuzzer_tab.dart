@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../utils/flipper_irdb.dart';
 import '../models/ir_device.dart';
