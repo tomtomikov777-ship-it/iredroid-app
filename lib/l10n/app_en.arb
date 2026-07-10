@@ -7,4 +7,7 @@
   "volumeDown": "Volume -",
   "settings": "Settings",
   "language": "Language"
+  "flipper": "Flipper",
+  "custom": "Custom",
+  "fuzzer": "Fuzzer"
 }
