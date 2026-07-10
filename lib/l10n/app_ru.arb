@@ -1,0 +1,10 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Мой пульт",
+  "selectDevice": "Выберите устройство",
+  "power": "Вкл/Выкл",
+  "volumeUp": "Громкость +",
+  "volumeDown": "Громкость -",
+  "settings": "Настройки",
+  "language": "Язык"
+}
