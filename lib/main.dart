@@ -1,77 +1,45 @@
 import 'package:flutter/material.dart';
-import 'screens/main_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
-  runApp(const MyApp());
+// Импортируйте свои экраны (у вас они уже есть)
+import 'screens/home_screen.dart';   // предположим, главный экран так называется
+// Если у вас другое имя — замените на правильное (например, 'home_page.dart')
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final languageCode = prefs.getString('languageCode') ?? 'en';
+  runApp(MyApp(languageCode: languageCode));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String languageCode;
+  const MyApp({Key? key, required this.languageCode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'IReDroid',
+      title: 'My Remote', // временно, но будет заменяться из локализации
+      locale: Locale(languageCode),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ru'),
+        // можно добавить украинский: Locale('uk'),
+      ],
       theme: ThemeData(
-        // Flipper Zero inspired theme - Orange and dark colors
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFFFF8C00), // Flipper Zero orange
-          secondary: Color(0xFFFF8C00),
-          surface: Color(0xFF1E1E1E), // Dark surface
-          background: Color(0xFF121212), // Very dark background
-          onPrimary: Colors.black,
-          onSecondary: Colors.black,
-          onSurface: Colors.white,
-          onBackground: Colors.white,
-        ),
+        primarySwatch: Colors.blue,
         useMaterial3: true,
-        // App bar theme
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF1E1E1E),
-          foregroundColor: Color(0xFFFF8C00),
-          elevation: 0,
-        ),
-        // Tab bar theme  
-        tabBarTheme: const TabBarThemeData(
-          labelColor: Color(0xFFFF8C00),
-          unselectedLabelColor: Colors.grey,
-          indicator: UnderlineTabIndicator(
-            borderSide: BorderSide(color: Color(0xFFFF8C00), width: 2),
-          ),
-        ),
-        // Card theme
-        cardTheme: const CardThemeData(
-          color: Color(0xFF2D2D2D),
-          elevation: 2,
-        ),
-        // Elevated button theme
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFF8C00),
-            foregroundColor: Colors.black,
-          ),
-        ),
-        // Disable animations for faster performance
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: {
-            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-          },
-        ),
       ),
-      // Disable debug banner
-      debugShowCheckedModeBanner: false,
-      // Disable animations globally
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            // Disable animations
-            disableAnimations: true,
-          ),
-          child: child!,
-        );
-      },
-      home: const MainScreen(),
+      home: const HomeScreen(), // замените на ваш главный виджет
+      // Если у вас используется другая стартовая страница — укажите её
     );
   }
 }
