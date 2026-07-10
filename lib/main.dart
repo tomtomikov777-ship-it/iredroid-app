@@ -2,27 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-// Импортируйте свои экраны (у вас они уже есть)
-import 'screens/home_screen.dart';   // предположим, главный экран так называется
-// Если у вас другое имя — замените на правильное (например, 'home_page.dart')
+import 'screens/main_screen.dart';   // вместо home_screen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final languageCode = prefs.getString('languageCode') ?? 'en';
-  runApp(MyApp(languageCode: languageCode));
+  final isDark = prefs.getBool('isDark') ?? false;
+  runApp(MyApp(languageCode: languageCode, isDark: isDark));
 }
 
 class MyApp extends StatelessWidget {
   final String languageCode;
-  const MyApp({Key? key, required this.languageCode}) : super(key: key);
+  final bool isDark;
+  const MyApp({Key? key, required this.languageCode, required this.isDark}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Remote', // временно, но будет заменяться из локализации
+      title: 'My Remote',
       locale: Locale(languageCode),
+      theme: ThemeData.light(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -32,14 +34,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('en'),
         Locale('ru'),
-        // можно добавить украинский: Locale('uk'),
       ],
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(), // замените на ваш главный виджет
-      // Если у вас используется другая стартовая страница — укажите её
+      home: const MainScreen(),   // ← теперь главный экран
     );
   }
 }
