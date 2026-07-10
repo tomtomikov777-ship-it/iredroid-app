@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appTitle": "My Remote",
+  "selectDevice": "Select device",
+  "power": "Power",
+  "volumeUp": "Volume +",
+  "volumeDown": "Volume -",
+  "settings": "Settings",
+  "language": "Language"
+}
