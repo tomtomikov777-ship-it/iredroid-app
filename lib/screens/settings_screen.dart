@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../main.dart' as app;
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -31,30 +32,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       _currentLanguage = code;
     });
-    // Перезапускаем приложение для применения языка
+    // Перезапускаем приложение, чтобы применить язык
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => MyApp(locale: code)),
+      MaterialPageRoute(builder: (context) => app.MyApp(languageCode: code)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settings),
+        title: Text(l10n.settings),
       ),
-      body: ListTile(
-        title: Text(AppLocalizations.of(context)!.language),
-        trailing: DropdownButton<String>(
-          value: _currentLanguage,
-          items: const [
-            DropdownMenuItem(value: 'en', child: Text('English')),
-            DropdownMenuItem(value: 'ru', child: Text('Русский')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(l10n.language),
+              trailing: DropdownButton<String>(
+                value: _currentLanguage,
+                items: const [
+                  DropdownMenuItem(value: 'en', child: Text('English')),
+                  DropdownMenuItem(value: 'ru', child: Text('Русский')),
+                ],
+                onChanged: (value) {
+                  if (value != null) _changeLanguage(value);
+                },
+              ),
+            ),
           ],
-          onChanged: (value) {
-            if (value != null) _changeLanguage(value);
-          },
         ),
       ),
     );
