@@ -6,7 +6,10 @@
   "volumeUp": "Volume +",
   "volumeDown": "Volume -",
   "settings": "Settings",
-  "language": "Language"
+  "language": "Language",
+  "darkTheme": "Dark theme",
+  "save": "Save",
+  "cancel": "Cancel",
   "flipper": "Flipper",
   "custom": "Custom",
   "fuzzer": "Fuzzer"

@@ -6,7 +6,10 @@
   "volumeUp": "Громкость +",
   "volumeDown": "Громкость -",
   "settings": "Настройки",
-  "language": "Язык"
+  "language": "Язык",
+  "darkTheme": "Тёмная тема",
+  "save": "Сохранить",
+  "cancel": "Отмена",
   "flipper": "Flipper",
   "custom": "Свои",
   "fuzzer": "Fuzzer"
